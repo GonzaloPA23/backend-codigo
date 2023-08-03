@@ -4,6 +4,7 @@ pip install marshmallow-sqlalchemy
 pip install Flask-Cors
 pip install flask-swagger-ui
 pip install gunicorn
+pip install python-dotenv
 
 pip list -> lista las librerias que se están usando
 pip freeze -> lista las librerias que se están usando y sus versiones (para guardarlas en un archivo) , solo las que se han instalado
