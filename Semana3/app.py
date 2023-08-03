@@ -7,9 +7,15 @@ from models.mascota import MascotaModel
 from flask_migrate import Migrate
 from flask_restful import Api
 from controllers.usuario import UsuariosController, UsuarioController
+from controllers.mascota import MascotasController
 from flask_cors import CORS
 from flask_swagger_ui import get_swaggerui_blueprint
 from os import environ
+from dotenv import load_dotenv
+
+# load_dotenv tiene que estar en la primera línea de nuestro archivo principal 
+# ya que cargará las variables del archivo .env y podrán ser utilizadas en todo el proyecto
+load_dotenv()
 
 app = Flask(__name__)
 api = Api(app)
@@ -49,7 +55,11 @@ app.register_blueprint(configuracionSwagger)
 # los dialectos pueden ser : mysql, postgresql, sqlite, oracle, mssql
 # postgresql://<usuario>:<contraseña>@<host>:<puerto>/<nombre_base_de_datos>
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:@Goldenboy2310@@localhost:5432/directorio'
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL')
+passwordBd = environ.get("DATABASE_URL").split(":")[2].split("@localhost")[0]
+passwordConvertida = quote_plus(passwordBd)
+urlBd = environ.get("DATABASE_URL").replace(passwordBd, passwordConvertida)
+print(passwordBd)
+app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 # app.config[
 #     "SQLALCHEMY_DATABASE_URI"
 # ] = "postgresql://postgres:%s@localhost:5432/directorio" % quote_plus("@Goldenboy2310@")
@@ -75,6 +85,7 @@ def crearTablas():
 # Acá agregamos todas las rutas de nuestros controladores
 api.add_resource(UsuariosController, "/usuarios")
 api.add_resource(UsuarioController, "/usuario/<int:id>")
+api.add_resource(MascotasController, "/mascotas")
 
 if __name__ == "__main__":
     app.run(debug=True)
