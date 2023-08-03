@@ -1,0 +1,28 @@
+pip install Flask-Migrate
+pip install flask-restful
+pip install marshmallow-sqlalchemy
+pip install Flask-Cors
+pip install flask-swagger-ui
+pip install gunicorn
+
+pip list -> lista las librerias que se están usando
+pip freeze -> lista las librerias que se están usando y sus versiones (para guardarlas en un archivo) , solo las que se han instalado
+pip install -r "nombre del archivo" -> instala las librerias que estan en un archivo 
+pip freeze > librerias2.txt -> crea el archivo automaticamente con las librerias que se estan usando en el proyecto en un archivo de texto
+    *el simbolo > sirve para que se guarde todo en un archivo de tipo txt* 
+
+pip freeze > requirements.txt -> crea el archivo automaticamente con las librerias que se estan usando en el proyecto en un archivo de texto y se va actualizar cuando se ejecute el comando, cada vez que se instale una nueva libreria
+pip install -r requirements.txt > para instalar las librerias del archivo requirements.txt   
+
+
+flask db upgrade -> Ejecuta todas las migraciones que no se han ejecutado en la bd
+flask db migrate -m "elimine la columna direccion"
+flask db downgrade aef0dccb5426
+
+
+flask db init                    > inicializa nuestro proyecto con migraciones
+flask db migrate -m "Mensaje"    > creara la migracion si es que hay con el nombre que le coloquemos
+flask db upgrade                 > ejecutara las migraciones que aun no estan en la base de datos 
+flask db upgrade --sql [version] > mostrara el SQL de esa aplicacion PERO no efectuara la operacion
+flask db downgrade VERSIÓN       > retrocedera a la version que hemos especificado 
+

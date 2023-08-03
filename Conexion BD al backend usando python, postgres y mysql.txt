@@ -1,0 +1,10 @@
+para mysql y postgres, para hacer la vinculación de la base de datos en python con los motores de BD
+se hace lo siguiente:
+primero crear un entorno virtual
+segundo instalar la libreria dependiendo el motor de bd
+	En caso ser mysql : pip install mysqlclient
+	 * from MySQLdb import _mysql
+	En caso ser postgres: pip install psycopg2
+	 * from psycopg2 import connect
+
+

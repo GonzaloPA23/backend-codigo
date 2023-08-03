@@ -1,0 +1,7 @@
+psql -U postgres -h localhost -p Puerto > conectarnos a una base de datos
+psql -U USER -h HOST -p PUERTO -d DATABASE > conectamos a una base de datos desde la terminal
+\c nombre_base_datos  > para cambiarse de base de datos
+\dt > para mostrar las tablas creadas
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; > extensión que sirve para el uuid 
+\q > Salimos de psql
+\l > lista todas las bases de datos en el servidor 
