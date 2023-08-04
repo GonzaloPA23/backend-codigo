@@ -55,11 +55,14 @@ app.register_blueprint(configuracionSwagger)
 # los dialectos pueden ser : mysql, postgresql, sqlite, oracle, mssql
 # postgresql://<usuario>:<contraseña>@<host>:<puerto>/<nombre_base_de_datos>
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:@Goldenboy2310@@localhost:5432/directorio'
-passwordBd = environ.get("DATABASE_URL").split(":")[2].split("@localhost")[0]
-passwordConvertida = quote_plus(passwordBd)
-urlBd = environ.get("DATABASE_URL").replace(passwordBd, passwordConvertida)
-print(passwordBd)
-app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
+if environ.get("PYTHON_VERSION"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = environ.get("DATABASE_URL")
+else:    
+    passwordBd = environ.get("DATABASE_URL").split(":")[2].split("@localhost")[0]
+    passwordConvertida = quote_plus(passwordBd)
+    urlBd = environ.get("DATABASE_URL").replace(passwordBd, passwordConvertida)
+    print(passwordBd)
+    app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 # app.config[
 #     "SQLALCHEMY_DATABASE_URI"
 # ] = "postgresql://postgres:%s@localhost:5432/directorio" % quote_plus("@Goldenboy2310@")
