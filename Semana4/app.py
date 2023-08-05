@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from models import *
 from flasgger import Swagger
-from controllers import CategoriasController, RegistroController
+from controllers import CategoriasController, RegistroController, LoginController
 # LOAD > convierte un string en formato json a un diccionario
 from json import load
 
@@ -54,6 +54,7 @@ Migrate(app, conexion)
 # rutas
 api.add_resource(CategoriasController, '/categorias')
 api.add_resource(RegistroController, '/registro')
+api.add_resource(LoginController, '/login')
 
 if __name__ == '__main__':
     app.run(debug=True)
