@@ -24,7 +24,7 @@ api = Api(app)
 # allow_headers > indica las cabeceras que se pueden enviar desde el frontend, por defecto todo (*)
 CORS(
     app,
-    origins=["https://editor.swagger.io", "https://mifrontend.com","https://directorio-mascotas-gonzalo.onrender.com"],
+    origins=["https://editor.swagger.io", "https://mifrontend.com","https://directorio-mascotas-gonzalo.onrender.com/docs"],
     methods=["GET", "POST", "PUT", "DELETE"],
     # authorization > sirve para indicar que el header authorization puede ser enviado desde el frontend, para cuestiones de autorización
     # content-type > sirve para indicar que el header content-type puede ser enviado desde el frontend, ver la información que nos está enviando el cliente
