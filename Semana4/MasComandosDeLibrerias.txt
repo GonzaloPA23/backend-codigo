@@ -1,0 +1,7 @@
+pip install flasgger -> para swagger
+pip install marshmallow_enum -> para los enums
+ pip install bcrypt -> para los hash
+# el load -> para validar si el diccionario que está viniendo cumple con las condiciones -> validar la data
+# el dump -> para devolver la información proveniente de la base de datos -> convertir la data a un diccionario
+# marshmallow para autenticacion -> https://marshmallow.readthedocs.io/en/stable/
+pip install Flask-JWT-Extended -> para la creación de tokens
