@@ -8,9 +8,11 @@ from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from models import *
 from flasgger import Swagger
-from controllers import CategoriasController, RegistroController, LoginController
+from controllers import CategoriasController, RegistroController, LoginController, SubirImagenController
+from flask_jwt_extended import JWTManager
 # LOAD > convierte un string en formato json a un diccionario
 from json import load
+from datetime import timedelta
 
 # sirve para cargar mis variables declaradas en el archivo .env como si fueran variables de entorno
 load_dotenv()
@@ -42,6 +44,12 @@ else:
     #print(passwordBd)
     app.config['SQLALCHEMY_DATABASE_URI'] = urlBd
 
+# servira para firmar las tokwns
+app.config['JWT_SECRET_KEY'] = environ.get('JWT_SECRET')
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1, minutes=15) #tiempo de expiracion de la token
+
+JWTManager(app)
+
 Swagger(app,template=swaggerData, config=swaggerConfig)
 # CORS > Cross Origin Resource Sharing (sirve para indicar quien puede tener acceso a mi API, indicando el dominio (origins), las cabeceras (allow_headers), y los metodos (methods))
 CORS(app, origins='*')
@@ -55,6 +63,7 @@ Migrate(app, conexion)
 api.add_resource(CategoriasController, '/categorias')
 api.add_resource(RegistroController, '/registro')
 api.add_resource(LoginController, '/login')
+api.add_resource(SubirImagenController, '/subir-imagen')
 
 if __name__ == '__main__':
     app.run(debug=True)

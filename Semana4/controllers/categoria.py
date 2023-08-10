@@ -2,9 +2,15 @@ from flask_restful import Resource, request
 from models import CategoriaModel
 from dtos import CategoriaRequestDto
 from utilitarios import conexion
+from decorators import validator_usuario_admin
+# get_jwt_identity > devolvera la identificación del usuario de la token
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 class CategoriasController(Resource):
+    @validator_usuario_admin # sirve para indicar que este endpoint necesita una token para poder acceder a el
     def post(self):
+        # security:
+        #    - Bearer: [] -> acá se almacena el token para poder acceder a este endpoint (post) -> se debe enviar en el header de la petición 
         """
         Creacion de una categoria
         ---
@@ -26,7 +32,8 @@ class CategoriasController(Resource):
                     imagen:
                         type: string
                         example: 'https://www.google.com'
-                    
+        security:
+            - Bearer: []            
         responses:
             201:
               description: Categoria creada exitosamente
@@ -34,6 +41,8 @@ class CategoriasController(Resource):
                  $ref: '#/definitions/Categoria'
         """
         dto = CategoriaRequestDto()
+        # identificador = get_jwt_identity()
+        # print(identificador)
         try:
             dataVerificada = dto.load(request.get_json())
             nuevaCategoria = CategoriaModel(**dataVerificada)
