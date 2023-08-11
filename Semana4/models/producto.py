@@ -1,5 +1,6 @@
 from utilitarios import conexion
 from sqlalchemy import Column, ForeignKey, types
+from sqlalchemy.orm import relationship
 
 class ProductoModel(conexion.Model):
     __tablename__='productos'
@@ -14,3 +15,9 @@ class ProductoModel(conexion.Model):
     stock = Column(type_=types.Integer, nullable=False)
     categoriaId = Column(ForeignKey(column='categorias.id'), type_=types.Integer
     , name='categoria_id')
+
+    # colocar el nombre de la clase que se va a relacionar
+    # backref > crea un atributo virtual (se crea al momento de llamar a una/muchas categoria en la clase CategoriaModel)
+
+    # relationship > con el relationship hace que se muestre la información de la categoría relacionada al producto
+    categoria = relationship('CategoriaModel', backref='productos')
