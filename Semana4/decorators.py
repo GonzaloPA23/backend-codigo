@@ -26,3 +26,20 @@ def validator_usuario_admin(funcion):
         return funcion(*args, **kwargs)
     
     return wrapper # retorna la funcion wrapper decorada con el jwt_required
+
+def validator_usuario_cliente(funcion):
+    @wraps(funcion)
+    def wrapper(*args,**kwargs):
+        data = verify_jwt_in_request()
+        id = data[1].get('sub')
+        
+        usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = id).first()
+        if not usuarioEncontrado:
+            raise NoAuthorizationError('El usuario no existe')
+        print(usuarioEncontrado.tipoUsuario) # 1 > admin, 2 > usuario normal
+
+        if usuarioEncontrado.tipoUsuario != TipoUsuario.CLIENTE:
+            raise NoAuthorizationError("El usuario no tiene los permisos suficientes") # el raise 
+        
+        return funcion(*args, **kwargs)
+    return wrapper

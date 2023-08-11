@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from urllib.parse import quote_plus
 from models import *
 from flasgger import Swagger
-from controllers import CategoriasController, RegistroController, LoginController, SubirImagenController, DevolverImagenController, ProductosController
+from controllers import CategoriasController, RegistroController, LoginController, SubirImagenController, DevolverImagenController, ProductosController, PedidosController
 from flask_jwt_extended import JWTManager
 # LOAD > convierte un string en formato json a un diccionario
 from json import load
@@ -66,6 +66,7 @@ api.add_resource(LoginController, '/login')
 api.add_resource(SubirImagenController, '/subir-imagen')
 api.add_resource(DevolverImagenController,'/imagenes/<nombreImagen>')
 api.add_resource(ProductosController, '/productos')
+api.add_resource(PedidosController, '/pedidos')
 
 if __name__ == '__main__':
     app.run(debug=True)
