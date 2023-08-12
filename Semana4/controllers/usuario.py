@@ -1,9 +1,10 @@
 from models import UsuarioModel
 from utilitarios import conexion
 from flask_restful import Resource, request
-from dtos import UsuarioRequestDto, UsuarioResponseDto, LoginRequestDto
+from dtos import UsuarioRequestDto, UsuarioResponseDto, LoginRequestDto, CambiarPasswordRequestDto
 from bcrypt import gensalt, hashpw, checkpw
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from mensajeria import cambiarPassword
 
 class RegistroController(Resource):
     def post(self):
@@ -84,5 +85,68 @@ class LoginController(Resource):
         except Exception as e:
             return {
                 'message': 'Error al hacer el login',
+                'content': e.args
+            }, 400
+        
+class UsuarioController(Resource):
+    # obliga a que para ingresar a este metodo se tenga que proveer una token por el header de authorization
+    @jwt_required() # obliga al controlador que se le pase una token para poder acceder a este controlador
+    def get(self):
+        # extraer del payload de la jwt el identity que es a quien le pertenece esta token
+        identity = get_jwt_identity() #
+        print(identity)
+        usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = identity).first()
+
+        if not usuarioEncontrado:
+            return {
+                'message': 'El usuario no existe',
+            }, 404
+        
+        dto = UsuarioResponseDto()
+        return {
+            'content': dto.dump(usuarioEncontrado)
+        }
+    
+class CambiarPasswordController(Resource):
+    @jwt_required()
+    def post(self):
+        data = request.get_json()
+        dto = CambiarPasswordRequestDto()
+        try:
+            dataValidada = dto.load(data)
+            identity = get_jwt_identity()
+            # buscar si el usuario existe en la base de datos, si no existe, devolver un error
+            usuarioEncontrado = conexion.session.query(UsuarioModel).filter_by(id = identity).first()
+
+            if not usuarioEncontrado:
+                return {
+                    'message': 'El usuario no existe',
+                }, 404
+
+            # validar si la contraseña actual es la misma que la que esta en la base de datos (dataValidada.get('password'))
+            # NOTE: tienen que convertirlo a un byte para poder compararlos con el checkpw
+            password = bytes(dataValidada.get('password'),'utf-8')
+            hashedPassword = bytes(usuarioEncontrado.password,'utf-8') # password hasheado
+
+            if checkpw(password, hashedPassword) == False:
+                return {
+                    'message': 'La contraseña actual es incorrecta',
+                }, 400
+            
+            # hashear la nueva password y la van a guardar en el usuario actual
+            nuevaPassword = bytes(dataValidada.get('nuevoPassword'),'utf-8')
+            
+            salt = gensalt() # expresado en bytes
+            hashNuevaPassword = hashpw(nuevaPassword, salt).decode('utf-8') # mezcla el texto aleatorio con la contraseña y genera un hash
+            usuarioEncontrado.password = hashNuevaPassword
+            conexion.session.commit()
+
+            cambiarPassword(usuarioEncontrado.correo)
+            return {
+                'message': 'Contraseña cambiada exitosamente'
+            }
+        except Exception as e:
+            return {
+                'message': 'Error al cambiar la contraseña',
                 'content': e.args
             }, 400

@@ -5,3 +5,4 @@ pip install marshmallow_enum -> para los enums
 # el dump -> para devolver la información proveniente de la base de datos -> convertir la data a un diccionario
 # marshmallow para autenticacion -> https://marshmallow.readthedocs.io/en/stable/
 pip install Flask-JWT-Extended -> para la creación de tokens
+pip install validate_email -> para validar el email
