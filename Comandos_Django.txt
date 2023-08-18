@@ -1,0 +1,9 @@
+django-admin                                            > sirve para ver los comandos que se pueden usar
+django-admin startproject NOMBRE_PROYECTO [UBICACION]   > crea un proyecto de django
+py manage.py runserver                                  > corre el servidor
+python manage.py showmigrations                         > muestra las migraciones que hay en mi proyecto y las que se han ejecutado con [X]
+python manage.py migrate                                > ejecuta las migraciones que no se han ejecutado en nuestra bd
+python manage.py sqlmigrate NOMNRE_APP NUM_MIGRATION    > muestra el sql que se ejecutara en la migracion
+python manage.py startapp NOMBRE_APP                    > crear una nueva aplicacion en nuestro proyectox
+python manage.py makemigrations gestion                 > crea una migracion para la aplicacion gestion
+
