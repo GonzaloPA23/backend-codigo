@@ -7,3 +7,4 @@ python manage.py sqlmigrate NOMNRE_APP NUM_MIGRATION    > muestra el sql que se 
 python manage.py startapp NOMBRE_APP                    > crear una nueva aplicacion en nuestro proyectox
 python manage.py makemigrations gestion                 > crea una migracion para la aplicacion gestion
 
+pip install djangorestframework                         > instala el framework de django para crear apis rest 

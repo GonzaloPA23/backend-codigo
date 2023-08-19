@@ -20,7 +20,7 @@ class CategoriaModel(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
     nombre = models.TextField(null=False)
     nivelAzucar = models.TextField(
-        name="nivel_azucar",
+        db_column="nivel_azucar",
         null=False,
         choices=opcionesNivelAzucar
     )
@@ -35,7 +35,7 @@ class GolosinaModel(models.Model):
     )
     id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
     nombre = models.TextField(null=False)
-    fechaVencimiento = models.DateField(editable=True, null=False, name="fecha_vencimiento")
+    fechaVencimiento = models.DateField(editable=True, null=False, db_column="fecha_vencimiento")
     precio = models.FloatField(null=False)
     procedencia = models.TextField(choices=tipoProcedencia,default="NACIONAL")
 
@@ -59,5 +59,6 @@ class GolosinaModel(models.Model):
 
         # jamas se podra repetir en un registro el nombre y la fecha de vencimiento
         # constraint | restriccion
-        # nombre de las columnas no de los atributos
-        unique_together = [['nombre', 'fecha_vencimiento']] 
+        # nombre de las columnas no de los atributos si usamos el parametro name 
+        # caso contrario usar el parametro del atributo
+        unique_together = [['nombre', 'fechaVencimiento']] 
