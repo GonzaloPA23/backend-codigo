@@ -8,3 +8,5 @@ python manage.py startapp NOMBRE_APP                    > crear una nueva aplica
 python manage.py makemigrations gestion                 > crea una migracion para la aplicacion gestion
 
 pip install djangorestframework                         > instala el framework de django para crear apis rest 
+
+pip install "django-phonenumber-field[phonenumberslite]" > instala el paquete para validar numeros de telefono
