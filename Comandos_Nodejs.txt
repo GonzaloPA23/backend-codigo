@@ -1,0 +1,12 @@
+npm i express > install express para crear la api es como flask y nestjs es como django
+
+npm i --save-dev @types/express > para que typescript reconozca express
+
+npm run saludar > para ejecutar el script saludar que esta en el package.json 
+[npm run "nombre del script" > para ejecutar el script que esta en el package.json]
+
+npm start > para ejecutar el script start que esta en el package.json 
+
+npm i --save-dev nodemon > para que se reinicie el servidor cada vez que se haga un cambio en el codigo
+
+nodemon es una herramienta que se ejecuta en segundo plano y esto hace que siempre este escuchando los cambios que se hacen en el codigo y se reinicie el servidor
