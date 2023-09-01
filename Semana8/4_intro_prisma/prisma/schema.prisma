@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Alumno {
+  // PK // indicar que trabajaremos con UUID // indicar un valor por defecto
+  // El simbolo de ? indica que el campo puede ser nulo 
+  id                  String @id @db.Uuid @default(uuid())
+  nombre              String
+  apellido            String
+  correo              String @unique
+  telefonoEmergencia  String @map("telefono_emergencia")
+  grupoSanguineo      TipoGrupoSanguineo?
+
+  // Establecemos la relacion de anioLectivos
+  anioLectivos AnioLectivo[] 
+  @@map("alumnos")
+}
+
+model Grado {
+  id String @id @default(uuid()) @db.Uuid
+  nombreNumerico String @map("nombre_numerico")
+  nombreTexto String @map("nombre_texto")
+
+  anioLectivos AnioLectivo[]
+  // Cuando queremos modificar información de la tabla usamos @@
+  @@map("grados") // indicamos el nombre de la tabla en la base de datos
+}
+
+model Seccion{
+  id String @id @default(uuid()) @db.Uuid
+  nombre String @unique
+
+  anioLectivos AnioLectivo[]
+  @@map("secciones") // indicamos el nombre de la tabla en la base de datos
+}
+
+model AnioLectivo {
+  id String @id @default(uuid()) @db.Uuid
+  anio String // probar DateTime @db.Date
+  nivel NivelAcademico @default(PRIMARIA)
+
+  // CREAR NUESTRAS RELACIONES
+  alumnoId String @map("alumno_id") @db.Uuid
+  gradoId String @map("grado_id") @db.Uuid
+  seccionId String @map("seccion_id") @db.Uuid
+
+  // fields > indica las columnas que vamos a utilizar para crear la relación 
+  // references > indica las columnas de la tabla a la que se hace referencia 
+  alumno Alumno @relation(fields: [alumnoId], references: [id])
+  grado Grado @relation(fields: [gradoId],references: [id])
+  seccion Seccion @relation(fields: [seccionId],references: [id])
+
+  @@map("anio_lectivos") // indicamos el nombre de la tabla en la base de datos
+}
+
+enum TipoGrupoSanguineo {
+  A_POSITIVO 
+  A_NEGATIVO
+  B_POSITIVO
+  B_NEGATIVO
+  AB_POSITIVO
+  AB_NEGATIVO
+  O_POSITIVO
+  O_NEGATIVO
+}
+
+enum NivelAcademico{ 
+  PRIMARIA
+  SECUNDARIA
+}

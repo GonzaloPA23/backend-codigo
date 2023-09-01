@@ -35,6 +35,8 @@ servidor
     });
   });
 
+
+// el metodo listen siempre debe ser el ultimo
 servidor.listen(3000, () => {
   console.log("Servidor corriendo exitosamente");
 });

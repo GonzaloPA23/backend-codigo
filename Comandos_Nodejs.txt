@@ -10,3 +10,20 @@ npm start > para ejecutar el script start que esta en el package.json
 npm i --save-dev nodemon > para que se reinicie el servidor cada vez que se haga un cambio en el codigo
 
 nodemon es una herramienta que se ejecuta en segundo plano y esto hace que siempre este escuchando los cambios que se hacen en el codigo y se reinicie el servidor
+
+npm init > para crear el package.json
+
+npm i prisma > para instalar prisma, uso de ORM
+
+npx prisma > para ejecutar prisma y ejecutar la linea de comandos de prisma 
+
+npx prisma init > para iniciar prisma, crea el archivo prisma/schema.prisma y la carpeta prisma/migrations y el archivo .env con la variable DATABASE_URL
+
+npx prisma migrate dev > crea la migración
+                            NOTA: si solamente queremos crear la migracion colocamos la opcion --create-only
+
+npx prisma migrate deploy > ejecuta la migración en nuestra base de datos
+
+npx prisma migrate reset  > resetea la base de datos y vuelve a ejecutar las migraciones
+
+npx prisma generate       > 
