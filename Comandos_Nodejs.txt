@@ -27,3 +27,6 @@ npx prisma migrate deploy > ejecuta la migración en nuestra base de datos
 npx prisma migrate reset  > resetea la base de datos y vuelve a ejecutar las migraciones
 
 npx prisma generate       > instala una libreria @primasa cllient en node_modules y crea el archivo prisma/client/index.d.ts que es el que nos permite interactuar con la base de datos desde el codigo 
+
+ npm i joi > para las validaciones de los datos que se envian en el body de la peticion 
+ npm install swagger-ui-express > para la documentacion de la api 
