@@ -30,3 +30,7 @@ npx prisma generate       > instala una libreria @primasa cllient en node_module
 
  npm i joi > para las validaciones de los datos que se envian en el body de la peticion 
  npm install swagger-ui-express > para la documentacion de la api 
+
+ npm i --save-dev @types/swagger-ui-express > para que typescript reconozca swagger-ui-express 
+
+ npm i cors > para que el servidor acepte peticiones de otros dominios 
